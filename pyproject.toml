@@ -1,0 +1,19 @@
+[project]
+name = "bar-payment-service"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Johan Palm",email = "johan.palm2000@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask (>=3.1.2,<4.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "bar_payment_service", from = "src"}]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
