@@ -1,1 +1,14 @@
-.venv
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environments
+.venv/
+env/
+venv/
+
+# Other typical Python ignores
+*.egg-info/
+dist/
+build/
