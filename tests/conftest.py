@@ -3,6 +3,7 @@ import os
 import sqlite3
 import pytest
 from db_handling import db_init
+from .helpers import clear_all
 
 TEST_DB = "test_bar.db"
 
@@ -26,3 +27,10 @@ def setup_and_teardown():
 
     if os.path.exists(TEST_DB):
         os.remove(TEST_DB)
+
+@pytest.fixture
+def reset_db(setup_and_teardown):
+    """Reset DB before each test."""
+    db_path = setup_and_teardown
+    clear_all(db_path)
+    return db_path
