@@ -12,3 +12,6 @@ venv/
 *.egg-info/
 dist/
 build/
+
+# Ignore the database
+database/bar.db
