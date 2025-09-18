@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dorm Bar Menu</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h1>Dorm Bar Menu</h1>
+<div id="buttons"></div>
+
+<h2>Current Order</h2>
+<table id="cart-table">
+    <tr><th>Drink</th><th>Quantity</th><th>Price</th></tr>
+</table>
+
+<button id="place-order">Place Order</button>
+
+<script>
+    const drinks = {{ drinks|tojson }};
+</script>
+<script src="{{ url_for('static', filename='cart.js') }}"></script>
+</body>
+</html>

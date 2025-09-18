@@ -1,0 +1,55 @@
+body { font-family: Arial, sans-serif; margin: 2rem; }
+button { margin: 0.5rem; padding: 1rem 2rem; font-size: 1.2rem; cursor: pointer; }
+button.small-btn { padding: 0.2rem 0.5rem; font-size: 0.9rem; cursor: pointer; }
+
+table {
+    margin-top: 1rem;
+    border-collapse: collapse;
+    width: 50%;
+    table-layout: fixed; /* ensure column widths are respected */
+}
+
+th, td {
+    padding: 0.5rem 1rem;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+td.quantity-cell {
+    width: 100px;
+    text-align: center; /* center the wrapper horizontally */
+}
+
+td.quantity-cell .qty-wrapper {
+    display: inline-flex;
+    align-items: center;     /* vertical center relative to number */
+    justify-content: center; /* horizontal center of wrapper in cell */
+    gap: 4px;                /* spacing between number and button */
+}
+
+td.quantity-cell .qty-number {
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1;
+}
+
+td.quantity-cell .small-btn {
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1;
+    flex-shrink: 0;          /* prevent shrinking in flex */
+    display: flex;
+    align-items: center;     /* vertically center content inside button */
+    justify-content: center; /* horizontally center content inside button */
+}
+
+
+
+
+
+
+td.price-cell { width: 100px; }
