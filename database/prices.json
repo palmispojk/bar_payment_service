@@ -1,5 +1,18 @@
 {
-    "Royal_blanche": 30,
-    "Ceer_pilsner": 25,
-    "shot": 12
+    "regular": {
+        "Royal Blanche": 30,
+        "Ceer Pilsner": 25,
+        "Minttu": 12,
+        "Sambuca": 12
+    },
+    "special": {
+        "Minttu": {
+            "quantity": 10,
+            "price": 85
+        },
+        "Sambuca": {
+            "quantity": 10,
+            "price": 85
+        }
+    }
 }
