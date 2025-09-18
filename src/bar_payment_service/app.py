@@ -1,6 +1,6 @@
 from flask import Flask
 import os
-from . import db
+from db_handling import db_init
 
 
 app = Flask(__name__)
@@ -12,12 +12,13 @@ DB_FOLDER = "database"
 DB_FILE_PATH = os.path.join(DB_FOLDER, "bar.db")
 DB_PRICES_PATH = os.path.join(DB_FOLDER, "prices.json")
 
-db.init_drinks(DB_FILE_PATH)
-db.update_prices_from_json(DB_FILE_PATH, DB_PRICES_PATH)
+db_init.init_drinks(DB_FILE_PATH)
+db_init.update_prices_from_json(DB_FILE_PATH, DB_PRICES_PATH)
+db_init.init_orders(DB_FILE_PATH)
 
 @app.route("/")
 def index():
-    con = db.sqlite3.connect(DB_FILE_PATH)
+    con = db_init.sqlite3.connect(DB_FILE_PATH)
     cur = con.cursor()
     cur.execute("SELECT id, name, price FROM drinks")
     drinks = cur.fetchall()
