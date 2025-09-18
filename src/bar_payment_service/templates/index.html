@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Dorm Bar Menu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>CJ Bar</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<h1>Dorm Bar Menu</h1>
+<h1>Collegium Juris Bar</h1>
 <div id="buttons"></div>
 
 <h2>Current Order</h2>
@@ -15,11 +15,16 @@
     <tr><th>Drink</th><th>Quantity</th><th>Price</th></tr>
 </table>
 
-<button id="place-order">Place Order</button>
+<div class="button-container">
+    <button id="place-order">Place Order</button>
+    <button id="clear-table">Clear</button>
+</div>
 
 <script>
     const drinks = {{ drinks|tojson }};
 </script>
 <script src="{{ url_for('static', filename='cart.js') }}"></script>
+
+
 </body>
 </html>

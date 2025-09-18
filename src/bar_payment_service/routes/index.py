@@ -6,10 +6,10 @@ main_bp = Blueprint("main", __name__)
 
 @main_bp.route("/", methods=["GET"])
 def index():
-    # Fetch drinks from database
+    # Fetch only active drinks from database
     con = sqlite3.connect(DB_FILE_PATH)
     cur = con.cursor()
-    cur.execute("SELECT name, price FROM drinks")
+    cur.execute("SELECT name, price FROM drinks WHERE active = 1")
     rows = cur.fetchall()
     con.close()
 
