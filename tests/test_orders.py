@@ -13,12 +13,24 @@ def test_create_order_with_multiple_items(setup_and_teardown):
 
     order_id, total_price = db_orders.create_order(db_path, items)
 
-    assert total_price == 90
-
     con = sqlite3.connect(db_path)
     cur = con.cursor()
+
     cur.execute("SELECT COUNT(*) FROM orders")
     assert cur.fetchone()[0] == 1
+
     cur.execute("SELECT COUNT(*) FROM order_items WHERE order_id = ?", (order_id,))
-    assert cur.fetchone()[0] == 2
+    assert cur.fetchone()[0] == len(items)
+
+    cur.execute("SELECT name, price FROM drinks")
+    drink_prices = dict(cur.fetchall())  # {name: price}
+
+    expected_total = sum(drink_prices[name] * quantity for name, quantity in items.items())
+
+    assert total_price == expected_total
+
+    cur.execute("SELECT total_price FROM orders WHERE id = ?", (order_id,))
+    db_total = cur.fetchone()[0]
+    assert db_total == expected_total
+
     con.close()
