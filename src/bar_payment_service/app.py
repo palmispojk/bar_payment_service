@@ -1,6 +1,7 @@
 from flask import Flask
-import os
-from db_handling import db_init
+import os, sqlite3
+from db_handling import db_init, db_config
+from . import routes
 
 
 app = Flask(__name__)
@@ -8,27 +9,20 @@ app = Flask(__name__)
 # --------------------------
 # Initialize database
 # --------------------------
-DB_FOLDER = "database"
-DB_FILE_PATH = os.path.join(DB_FOLDER, "bar.db")
-DB_PRICES_PATH = os.path.join(DB_FOLDER, "prices.json")
 
-db_init.init_drinks(DB_FILE_PATH)
-db_init.update_prices_from_json(DB_FILE_PATH, DB_PRICES_PATH)
-db_init.init_orders(DB_FILE_PATH)
+db_init.init_drinks(db_config.DB_FILE_PATH)
+db_init.update_prices_from_json(db_config.DB_FILE_PATH, db_config.PRICES_FILE_PATH)
+db_init.init_orders(db_config.DB_FILE_PATH)
 
-@app.route("/")
-def index():
-    con = db_init.sqlite3.connect(DB_FILE_PATH)
-    cur = con.cursor()
-    cur.execute("SELECT id, name, price FROM drinks")
-    drinks = cur.fetchall()
-    con.close()
+# --------------------------
+# Routing
+# --------------------------
+app.secret_key = "supersecretkey"
 
-    html = "<h1>Dorm Bar Menu</h1><ul>"
-    for d in drinks:
-        html += f"<li>{d[1]} - {d[2]} DKK</li>"
-    html += "</ul>"
-    return html
+# --------------------------
+# Routing
+# --------------------------
+app.register_blueprint(routes.index.main_bp)
 
 if __name__ == "__main__":
     app.run(debug=True)
