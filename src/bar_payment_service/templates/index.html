@@ -22,6 +22,7 @@
 
 <script>
     const drinks = {{ drinks|tojson }};
+    const specialsData = {{ specials|safe }};
 </script>
 <script src="{{ url_for('static', filename='cart.js') }}"></script>
 

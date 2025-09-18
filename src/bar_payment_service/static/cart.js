@@ -22,6 +22,37 @@ drinks.forEach(d => {
     buttonsDiv.appendChild(btn);
 });
 
+// ============================
+// Utility: Calculate price with specials
+// ============================
+function calculatePriceWithSpecials(drinkName, qty) {
+    const drinkData = drinks.find(d => d.name === drinkName);
+    const basePrice = drinkData.price;
+
+    // Specials list for this drink
+    const specials = specialsData[drinkName] || [];  
+    // Example: specialsData = { "Shot": [{quantity: 10, price: 85}], "Beer": [...] }
+
+    let remaining = qty;
+    let total = 0;
+
+    // Sort specials by largest quantity first (greedy approach)
+    specials.sort((a, b) => b.quantity - a.quantity);
+
+    for (const deal of specials) {
+        while (remaining >= deal.quantity) {
+            remaining -= deal.quantity;
+            total += deal.price;
+        }
+    }
+
+    // Add leftovers at normal price
+    total += remaining * basePrice;
+
+    return total;
+}
+
+
 // ----------------------------
 // Update cart table
 // ----------------------------
@@ -33,16 +64,15 @@ function updateCart() {
     totalQty = 0;
 
     for (let [name, qty] of Object.entries(cart)) {
-        const drinkData = drinks.find(d => d.name === name);
-        const price = drinkData.price * qty;
+        const drinkTotal = calculatePriceWithSpecials(name, qty);
 
-        totalPrice += price;
+        totalPrice += drinkTotal;
         totalQty += qty;
 
         const row = table.insertRow();
         row.insertCell(0).textContent = name;
 
-        // Quantity cell with wrapper
+        // Quantity cell
         const qtyCell = row.insertCell(1);
         qtyCell.className = "quantity-cell";
 
@@ -66,18 +96,19 @@ function updateCart() {
 
         qtyCell.appendChild(wrapper);
 
-        // Price cell
+        // Price cell (with specials applied)
         const priceCell = row.insertCell(2);
-        priceCell.textContent = price + " DKK";
+        priceCell.textContent = drinkTotal + " DKK";
         priceCell.className = "price-cell";
     }
 
-    // Total row (always visible)
+    // Total row
     const totalRow = table.insertRow();
     totalRow.insertCell(0).textContent = "Total";
     totalRow.insertCell(1).textContent = totalQty;
     totalRow.insertCell(2).textContent = totalPrice + " DKK";
 }
+
 
 // Initialize table at page load
 updateCart();
