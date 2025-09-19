@@ -6,7 +6,7 @@ def create_order(db_path: str, items: dict) -> tuple[int, float]:
 
     items = {
         "Beer": 3,
-        "Shot": 12  # if special: 10 for 85
+        "Shot": 12
     }
 
     Returns: (order_id, total_price)
