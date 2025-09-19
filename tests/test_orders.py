@@ -1,7 +1,8 @@
 import sqlite3
 from db_handling import db_orders
 from .helpers import add_special, get_drink_id, place_order, expected_rows_orders, calculate_expected_total
-    
+
+
 def test_create_one_order_inserts_order_row(setup_and_teardown):
     """Test that creating an order inserts one row in orders table."""
     db_path = setup_and_teardown
@@ -17,6 +18,7 @@ def test_create_one_order_inserts_order_row(setup_and_teardown):
 
     assert count == 1, "One order row should be created"
 
+
 def test_create_one_order_inserts_correct_order_items(setup_and_teardown):
     """Test that creating an order inserts correct number of rows in order_items table."""
     db_path = setup_and_teardown
@@ -31,6 +33,7 @@ def test_create_one_order_inserts_correct_order_items(setup_and_teardown):
     con.close()
 
     assert count == len(items), "Order items rows should match number of different drinks"
+
 
 def test_create_one_order_calculates_total_correctly(setup_and_teardown):
     """Test that total_price of the order matches sum of item prices."""
@@ -58,6 +61,7 @@ def test_create_one_order_calculates_total_correctly(setup_and_teardown):
 
 
 def test_single_special(reset_db):
+    """Test a single special, shot is in deal and beer is normal, see if num rows is correct and total price"""
     db_path = reset_db
 
     shot_id = get_drink_id(db_path, "Shot")
@@ -96,6 +100,7 @@ def test_single_special(reset_db):
 
 
 def test_multiple_specials(reset_db):
+    """Test a single special, shot  and beer is deal, see if num rows is correct and total price"""
     db_path = reset_db
 
     # Prepare specials
