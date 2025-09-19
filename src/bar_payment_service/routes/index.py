@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, session
 import json
-from db_handling.db_config import DB_FILE_PATH
+from env import DB_FILE_PATH
 from db_handling.db_utils import get_specials_and_drinks
 
 index_bp = Blueprint("index", __name__)

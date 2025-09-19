@@ -1,7 +1,8 @@
 from flask import Flask
 import os, sqlite3
-from db_handling import db_init, db_config
+from db_handling import db_init
 from .routes import index_bp, confirm_order_bp
+import env
 
 
 app = Flask(__name__)
@@ -10,9 +11,9 @@ app = Flask(__name__)
 # Initialize database
 # --------------------------
 
-db_init.init_drinks(db_config.DB_FILE_PATH)
-db_init.update_prices_from_json(db_config.DB_FILE_PATH, db_config.PRICES_FILE_PATH)
-db_init.init_orders(db_config.DB_FILE_PATH)
+db_init.init_drinks(env.DB_FILE_PATH)
+db_init.update_prices_from_json(env.DB_FILE_PATH, env.PRICES_FILE_PATH)
+db_init.init_orders(env.DB_FILE_PATH)
 
 # --------------------------
 # Routing
