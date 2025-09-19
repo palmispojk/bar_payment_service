@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Confirm Your Order</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<h2>Confirm Your Order</h2>
+<table id="cart-table" border="1">
+    <tr>
+        <th>Drink</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+</table>
+
+<div class="button-container">
+    <button class="cart-utility-button" id="confirm-order">Confirm Order</button>
+    <button 
+        class="cart-utility-button"
+        id="back-to-menu" 
+        data-index-url="{{ url_for('index.index') }}">
+        Back to Menu
+    </button>
+</div>
+
+<script>
+    const drinks = {{ drinks|tojson }};
+    const specialsData = {{ specials|safe }};
+</script>
+
+<script type="module" src="{{ url_for('static', filename='confirm_page.js') }}"></script>
+
+</body>
+</html>

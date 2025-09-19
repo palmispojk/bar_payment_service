@@ -16,16 +16,22 @@
 </table>
 
 <div class="button-container">
-    <button id="place-order">Place Order</button>
-    <button id="clear-table">Clear</button>
+    <button class="cart-utility-button" id="place-order">Place Order</button>
+    <button class="cart-utility-button" id="clear-table">Clear</button>
 </div>
 
 <script>
+    // Inject Python data into JS
     const drinks = {{ drinks|tojson }};
     const specialsData = {{ specials|safe }};
 </script>
-<script src="{{ url_for('static', filename='cart.js') }}"></script>
 
+<!-- ES6 modules for reusable cart logic -->
+<script type="module">
+    import '../static/cart/cart_utils.js';
+    import '../static/cart/cart_render.js';
+    import '../static/cart_page.js';
+</script>
 
 </body>
 </html>
