@@ -3,9 +3,9 @@ from db_handling import db_orders
 from .helpers import add_special, get_drink_id, place_order, expected_rows_orders, calculate_expected_total
 
 
-def test_create_one_order_inserts_order_row(setup_and_teardown):
+def test_create_one_order_inserts_order_row(reset_db):
     """Test that creating an order inserts one row in orders table."""
-    db_path = setup_and_teardown
+    db_path = reset_db
     items = {"Beer": 3, "Shot": 2}
 
     _, _ = db_orders.create_order(db_path, items)
@@ -19,9 +19,9 @@ def test_create_one_order_inserts_order_row(setup_and_teardown):
     assert count == 1, "One order row should be created"
 
 
-def test_create_one_order_inserts_correct_order_items(setup_and_teardown):
+def test_create_one_order_inserts_correct_order_items(reset_db):
     """Test that creating an order inserts correct number of rows in order_items table."""
-    db_path = setup_and_teardown
+    db_path = reset_db
     items = {"Beer": 3, "Shot": 2}
 
     order_id, _ = db_orders.create_order(db_path, items)
@@ -35,9 +35,9 @@ def test_create_one_order_inserts_correct_order_items(setup_and_teardown):
     assert count == len(items), "Order items rows should match number of different drinks"
 
 
-def test_create_one_order_calculates_total_correctly(setup_and_teardown):
+def test_create_one_order_calculates_total_correctly(reset_db):
     """Test that total_price of the order matches sum of item prices."""
-    db_path = setup_and_teardown
+    db_path = reset_db
     items = {"Beer": 3, "Shot": 2}
 
     order_id, total_price = db_orders.create_order(db_path, items)

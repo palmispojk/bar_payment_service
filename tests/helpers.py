@@ -9,22 +9,35 @@ def clear_table(db_path: str, table: str):
     con.commit()
     con.close()
 
-def add_special(db_path: str, drink_id: int, quantity: int, price: float, active: bool = True):
-    """Insert a special offer for a drink. Deactivate any existing specials for this drink."""
+def add_special(db_path: str, drink_id: int, quantity: int, price: float):
+    """Insert a special offer for a drink if it doesn't already exist.
+    If a matching special exists (same drink, quantity, price), activate it instead of inserting a new row.
+    """
     con = sqlite3.connect(db_path)
     cur = con.cursor()
 
-    # Deactivate existing specials for this drink
-    cur.execute("UPDATE specials SET active = 0 WHERE drink_id = ?", (drink_id,))
+    # Check if a special with same drink, quantity, and price exists
+    cur.execute(
+        "SELECT id, active FROM specials WHERE drink_id = ? AND quantity = ? AND price = ?",
+        (drink_id, quantity, price)
+    )
+    row = cur.fetchone()
 
-    # Insert new special
-    cur.execute("""
-        INSERT INTO specials (drink_id, quantity, price, active)
-        VALUES (?, ?, ?, ?)
-    """, (drink_id, quantity, price, int(active)))
+    if row:
+        # Already exists → just activate it
+        cur.execute("UPDATE specials SET active = 1 WHERE id = ?", (row[0],))
+    else:
+        # Deactivate other specials for this drink
+        cur.execute("UPDATE specials SET active = 0 WHERE drink_id = ?", (drink_id,))
+        # Insert new special
+        cur.execute(
+            "INSERT INTO specials (drink_id, quantity, price, active) VALUES (?, ?, ?, ?)",
+            (drink_id, quantity, price, 1)
+        )
 
     con.commit()
     con.close()
+
 
 def get_drink_id(db_path: str, name: str) -> int:
     """Return the ID of an active drink by name."""
@@ -44,7 +57,7 @@ def clear_all(db_path: str):
         clear_table(db_path, table)
 
 
-def place_order(db_path, items):
+def place_order(db_path: str, items: dict):
     """Helper to place an order and return rows for easier assertions."""
     order_id, total_price = db_orders.create_order(db_path, items)
     con = sqlite3.connect(db_path)
@@ -53,6 +66,7 @@ def place_order(db_path, items):
     rows = cur.fetchall()
     con.close()
     return order_id, total_price, rows
+
 
 def expected_rows_orders(quantity: int, deal_quantities: list[int]) -> int:
     """The expected amount of rows for ordered items

@@ -7,6 +7,11 @@ from .helpers import clear_all
 
 TEST_DB = "test_bar.db"
 
+ITEMS_PRICES = {
+    "Beer": 20.0,
+    "Shot": 15.0
+}
+
 @pytest.fixture
 def setup_and_teardown():
     # Remove old DB
@@ -18,8 +23,8 @@ def setup_and_teardown():
 
     con = sqlite3.connect(TEST_DB)
     cur = con.cursor()
-    cur.execute("INSERT INTO drinks (name, price) VALUES (?, ?)", ("Beer", 20))
-    cur.execute("INSERT INTO drinks (name, price) VALUES (?, ?)", ("Shot", 15))
+    cur.execute("INSERT INTO drinks (name, price) VALUES (?, ?)", ("Beer", ITEMS_PRICES["Beer"]))
+    cur.execute("INSERT INTO drinks (name, price) VALUES (?, ?)", ("Shot", ITEMS_PRICES["Shot"]))
     con.commit()
     con.close()
 
