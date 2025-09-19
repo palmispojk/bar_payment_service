@@ -33,7 +33,7 @@ document.getElementById("confirm-order").onclick = async (e) => {
 
     if (response.ok) {
         localStorage.removeItem("cart"); // clear cart after order
-        window.location.href = "/thankyou";
+        window.location.href = "/confirmed";
     } else {
         alert("Error finalizing order. Try again.");
     }

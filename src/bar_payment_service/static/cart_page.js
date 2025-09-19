@@ -3,13 +3,15 @@ import { renderEditableCartTable } from './cart/cart_render.js';
 // Load cart from localStorage
 let cart = JSON.parse(localStorage.getItem("cart") || "{}");
 
-// Render buttons
+// Render buttons once
 const buttonsDiv = document.getElementById('buttons');
+buttonsDiv.innerHTML = ""; // clear in case of reload
 drinks.forEach(d => {
     const btn = document.createElement('button');
     btn.textContent = `${d.name} - ${d.price} DKK`;
     btn.onclick = () => {
         cart[d.name] = (cart[d.name] || 0) + 1;
+        localStorage.setItem("cart", JSON.stringify(cart));
         renderEditableCartTable(cart, drinks, specialsData, "cart-table");
     };
     buttonsDiv.appendChild(btn);
@@ -34,3 +36,4 @@ document.getElementById('clear-table').onclick = () => {
     localStorage.removeItem('cart');
     renderEditableCartTable(cart, drinks, specialsData, "cart-table");
 };
+

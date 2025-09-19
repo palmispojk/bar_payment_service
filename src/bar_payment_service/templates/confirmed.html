@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Order Confirmed!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Order Confirmed!</h1>
+    <div class="button-container">
+        <button class="cart-utility-button" onclick="window.location.href='{{ url_for('index.index') }}'">Back to Menu</button>
+    </div>
+</body>
+</html>
