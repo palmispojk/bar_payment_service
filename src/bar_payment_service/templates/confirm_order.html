@@ -17,10 +17,15 @@
 </table>
 
 <div class="button-container">
-    <button class="cart-utility-button" id="confirm-order">Confirm Order</button>
     <button 
-        class="cart-utility-button"
+        id="confirm-order"
+        class="cart-utility-button" 
+        data-index-url="{{ url_for("confirm_order.finalize_order")}}">
+        Confirm Order
+    </button>
+    <button 
         id="back-to-menu" 
+        class="cart-utility-button"
         data-index-url="{{ url_for('index.index') }}">
         Back to Menu
     </button>

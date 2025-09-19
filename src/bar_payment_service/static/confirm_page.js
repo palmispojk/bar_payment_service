@@ -25,9 +25,7 @@ document.getElementById("confirm-order").onclick = async (e) => {
         return;
     }
 
-    const finalizeUrl = e.target.dataset.finalizeUrl;
-
-    const response = await fetch(finalizeUrl, {
+    const response = await fetch(e.target.dataset.indexUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ cart })
