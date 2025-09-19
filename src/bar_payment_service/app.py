@@ -1,7 +1,7 @@
 from flask import Flask
 import os, sqlite3
 from db_handling import db_init, db_config
-from . import routes
+from .routes import index_bp, confirm_order_bp
 
 
 app = Flask(__name__)
@@ -22,7 +22,8 @@ app.secret_key = "supersecretkey"
 # --------------------------
 # Routing
 # --------------------------
-app.register_blueprint(routes.index.main_bp)
+app.register_blueprint(index_bp)
+app.register_blueprint(confirm_order_bp)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
